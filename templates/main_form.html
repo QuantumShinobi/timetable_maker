@@ -1,0 +1,138 @@
+{% extends 'base.html' %} 
+{% block title %}Form{% endblock title %}
+{% block body %}
+<div class="mt-6 ps-4 ms-3">
+<h1 style="text-align: center">Timetable Form</h1>
+
+<h3>Enter the following details</h3>
+<br>
+
+<form style="text-align: center" method="POST" action="{% url 'timetable:main_form'%}">
+  {% csrf_token %}
+<div class="row g-1 align-items-center">
+    <div class="col-auto">
+      <label
+        class="has-text-weight-medium has-text-centered is-size-5"
+        for="no_of_periods"
+        >Please enter the number of periods</label
+      >
+      <br>
+      <input
+        class="form-control"
+        type="number"
+        placeholder="Enter number of periods"
+        name="no_of_periods"
+        id="no_of_periods"
+        required
+      />
+    </div>
+  </div>
+  <br>
+
+
+<div class="row g-1 align-items-center">
+    <div class="col-auto">
+      <label
+        class="has-text-weight-medium has-text-centered is-size-5"
+        for="period_duration"
+        >Enter the duration of each period (in minutes)</label
+      >
+      <br>
+      <input
+        class="form-control"
+        type="number"
+        placeholder="Period duration"
+        name="period_duration"
+        id="period_duration"
+        required
+      />
+    </div>
+  </div>
+  <br>
+
+<div class="row g-1 align-items">
+    <div class="col-auto">
+      <label
+        class="align-content-lg-start justify-content-evenly has-text-weight-medium is-size"
+        for="no_of_teachers"
+        >Number of teachers </label
+      >
+      <br>
+      <input
+        class="form-control"
+        type="number"
+        placeholder="Enter number of teachers"
+        name="no_of_teachers"
+        id="no_of_teachers"
+        required
+      />
+    </div>
+  </div>
+  <br>
+  <div class="row g-1 align-items-center">
+    <div class="col-auto">
+      <label
+        class="has-text-weight-medium has-text-centered is-size-5"
+        for="start_time"
+        >The time at which school starts</label
+      >
+      <br>
+      <input
+        class="form-control"
+        type="time"
+        placeholder="start_time"
+        name="start_time"
+        id="start_time"
+        required
+      />
+    </div>
+  </div>
+  <br>
+  <br>
+  
+
+  <div class="row g-1 align-items-center">
+    <div class="col-auto">
+      <label
+        class="has-text-weight-medium has-text-centered is-size-5"
+        for="end_time"
+        >The time at which school ends</label
+      >
+      <br>
+      <input
+        class="form-control"
+        type="time"
+        placeholder="end_time"
+        name="end_time"
+        id="end_time"
+        required
+      />
+    </div>
+  </div>
+  <br>
+  <br>
+
+  <div class="row g-1 align-items-center">
+    <div class="col-auto">
+      <label
+        class="has-text-weight-medium has-text-centered is-size-5"
+        for="lunch_period"
+        >Please enter the lunch period</label
+      >
+      <br>
+      <input
+        class="form-control"
+        type="number"
+        placeholder="Lunch period"
+        name="lunch_period"
+        id="lunch_period"
+        required
+      />
+    </div>
+  </div>
+  <br>
+
+  <input type="submit" class="btn btn-primary"></input>
+</form>
+</div>
+{% endblock body %}

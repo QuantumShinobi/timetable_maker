@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block title %}Form{% endblock title %}
+{% block body %}
+
+<div class="m-6 p-4 ms-3 me-3">
+
+<div>
+  <h1 style="text-align:center;">Timetable Form</h1>
+</div>
+<h2>Teacher details</h2> 
+<h4 class="fw-light">Enter the following details for each teacher</h4>
+<br>
+{% comment %} <br>
+ <center>
+     <div class="card border-success mb-3" style="text-align:center;max-width: 50rem">
+ 
+  <div class="card-header" style="text-align:center;font-family:sans-serif">Teacher information</div>
+  <div class="card-body">
+ 
+  </div>
+</div> {% endcomment %}
+
+   <style>
+     .bg{
+       backgroud-color: #bae6e5;
+     }
+   </style>
+
+
+<form style="text-align:center;" action="{% url 'timetable:teacher_form' %}" method="POST">
+{% csrf_token %}
+{% for i in no_of_teachers %}
+<p>
+
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{i}}"  aria-controls="collapseWidth">
+    Collapse teacher {{i}} info
+  </button>
+</p>
+
+  <div id="collapse_{{i}}" class= "collapse card rounded-1 bg-info-subtle" style="background-colour:#bae6e5" aria-expanded="true">
+   <div class="card-header">Teacher {{i}}</div>
+ <div class="row g-1 align-items-center card-body  ">
+  <div class="col-auto">
+<label class="has-text-weight-medium  has-text-centered is-size-5" for="teacher_name">Please enter teacher name</label> 
+<input id="teacher_{{i}}_name" name="teacher_{{i}}_name" class=" margin-5 form-control" aria-describedby="teacher_nameHelpInline" type="text" placeholder="Teacher name" name="teacher_name" id="teacher_name" required>
+  </div>
+  </div>
+
+
+
+
+<div class="row g-1 align-items-center card-body">
+  <div class="col-auto">
+<label class="col-form-label" for="subj_taught">Please enter subjects taught</label> 
+{% comment %} Make this input to dropdown {% endcomment %}
+<input id="teacher_{{i}}_subj" name="teacher_{{i}}_subj" class="form-control"  type="text" placeholder="Subjects taught" name="subj_taught" id="subj_taught" required>
+  </div>
+  </div>
+
+
+<div class="row g-1 align-items-center card-body">
+  <div class="col-auto">
+<label class="has-text-weight-medium  has-text-centered is-size-5" for="grades_taught">Please enter the grades taught (different grades separated by commas)</label> <br>
+<input id="teacher_{{i}}_grades" name="teacher_{{i}}_grades" class="form-control" aria-describedby="grades_taughtHelpInline" type="text" placeholder="Grades taught" name="grades_taught" id="grades_taught" required>
+</div>
+</div>
+</div>
+
+<br>
+<br>
+<br>
+{% endfor %}
+
+
+
+
+<input type="submit" class="btn btn-primary">
+</div>
+{% endblock body %}
