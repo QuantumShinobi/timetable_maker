@@ -32,6 +32,20 @@ class Timetable(models.Model):
                                                       minute=0,
                                                       second=0))
     teachers = models.ManyToManyField(Teacher)
+    timetable = models.JSONField(null=True, default=None, editable=True)
+    used_once = models.BooleanField(default=False)
+    # sorted_grade_1 = models.JSONField(null=True)
+    # sorted_grade_2 = models.JSONField(null=True)
+    # sorted_grade_3 = models.JSONField(null=True)
+    # sorted_grade_4 = models.JSONField(null=True)
+    # sorted_grade_5 = models.JSONField(null=True)
+    # sorted_grade_6 = models.JSONField(null=True)
+    # sorted_grade_7 = models.JSONField(null=True)
+    # sorted_grade_8 = models.JSONField(null=True)
+    # sorted_grade_9 = models.JSONField(null=True)
+    # sorted_grade_10 = models.JSONField(null=True)
+    # sorted_grade_11 = models.JSONField(null=True)
+    # sorted_grade_12 = models.JSONField(null=True)
 
     def __str__(self):
         return (f"Timetable {self.id}")
@@ -55,7 +69,7 @@ class Timetable(models.Model):
             for x, teach in enumerate(self.teachers.all()):
                 x += 1
                 n = teach.name
-                print(teach.grades_taught[n])
+                # print(teach.grades_taught[n])
                 if i in teach.grades_taught[n]:
                     locals()[f'g{int(i)}'].append({n: teach.subject})
         self.grade_1 = g1
@@ -162,7 +176,8 @@ class Timetable(models.Model):
                     c = c + 1
                     if c > 3 * p:
                         v = random.choice(_g3)
-                        if v.keys() != G1[i].keys() and v.keys() != G2[i].keys():
+                        if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
+                        ):
                             G3 = G3 + [v]
 
                 else:
@@ -195,7 +210,8 @@ class Timetable(models.Model):
                 if len(g5) > 0:
                     v = random.choice(g5)
                     if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                    ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys():
+                    ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
+                    ):
                         G5 = G5 + [v]
                         g5.remove(v)
                         _g5 = _g5 + [v]
@@ -203,13 +219,15 @@ class Timetable(models.Model):
                     if c > 3 * p:
                         v = random.choice(_g5)
                         if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                        ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys():
+                        ) and v.keys() != G3[i].keys() and v.keys(
+                        ) != G4[i].keys():
                             G5 = G5 + [v]
 
                 else:
                     v = random.choice(_g5)
                     if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                    ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys():
+                    ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
+                    ):
                         G5 = G5 + [v]
             c = 0
             while len(G6) == i:
@@ -225,8 +243,8 @@ class Timetable(models.Model):
                     if c > 3 * p:
                         v = random.choice(_g6)
                         if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                        ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                        ) and v.keys() != G5[i].keys():
+                        ) and v.keys() != G3[i].keys() and v.keys(
+                        ) != G4[i].keys() and v.keys() != G5[i].keys():
                             G6 = G6 + [v]
                 else:
                     v = random.choice(_g6)
@@ -240,7 +258,8 @@ class Timetable(models.Model):
                     v = random.choice(g7)
                     if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
                     ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                    ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys():
+                    ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
+                    ):
                         G7 = G7 + [v]
                         g7.remove(v)
                         _g7 = _g7 + [v]
@@ -248,14 +267,16 @@ class Timetable(models.Model):
                     if c > 3 * p:
                         v = random.choice(_g7)
                         if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                        ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                        ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys():
+                        ) and v.keys() != G3[i].keys() and v.keys(
+                        ) != G4[i].keys() and v.keys() != G5[i].keys(
+                        ) and v.keys() != G6[i].keys():
                             G7 = G7 + [v]
                 else:
                     v = random.choice(_g7)
                     if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
                     ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                    ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys():
+                    ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
+                    ):
                         G7 = G7 + [v]
             c = 0
             while len(G8) == i:
@@ -272,9 +293,10 @@ class Timetable(models.Model):
                     if c > 3 * p:
                         v = random.choice(_g8)
                         if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                        ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                        ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
-                        ) and v.keys() != G7[i].keys():
+                        ) and v.keys() != G3[i].keys() and v.keys(
+                        ) != G4[i].keys() and v.keys() != G5[i].keys(
+                        ) and v.keys() != G6[i].keys() and v.keys(
+                        ) != G7[i].keys():
                             G8 = G8 + [v]
 
                 else:
@@ -291,7 +313,8 @@ class Timetable(models.Model):
                     if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
                     ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
                     ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
-                    ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys():
+                    ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys(
+                    ):
                         G9 = G9 + [v]
                         g9.remove(v)
                         _g9 = _g9 + [v]
@@ -299,16 +322,18 @@ class Timetable(models.Model):
                     if c > 3 * p:
                         v = random.choice(_g9)
                         if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                        ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                        ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
-                        ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys():
+                        ) and v.keys() != G3[i].keys() and v.keys(
+                        ) != G4[i].keys() and v.keys() != G5[i].keys(
+                        ) and v.keys() != G6[i].keys() and v.keys(
+                        ) != G7[i].keys() and v.keys() != G8[i].keys():
                             G9 = G9 + [v]
                 else:
                     v = random.choice(_g9)
                     if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
                     ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
                     ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
-                    ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys():
+                    ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys(
+                    ):
                         G9 = G9 + [v]
             c = 0
             while len(G10) == i:
@@ -326,9 +351,10 @@ class Timetable(models.Model):
                     if c > 3 * p:
                         v = random.choice(_g10)
                         if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                        ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                        ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
-                        ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys(
+                        ) and v.keys() != G3[i].keys() and v.keys(
+                        ) != G4[i].keys() and v.keys() != G5[i].keys(
+                        ) and v.keys() != G6[i].keys() and v.keys(
+                        ) != G7[i].keys() and v.keys() != G8[i].keys(
                         ) and v.keys() != G9[i].keys():
                             G10 = G10 + [v]
 
@@ -348,7 +374,8 @@ class Timetable(models.Model):
                     ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
                     ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
                     ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys(
-                    ) and v.keys() != G9[i].keys() and v.keys() != G10[i].keys():
+                    ) and v.keys() != G9[i].keys() and v.keys() != G10[i].keys(
+                    ):
                         G11 = G11 + [v]
                         g11.remove(v)
                         _g11 = _g11 + [v]
@@ -356,10 +383,12 @@ class Timetable(models.Model):
                     if c > 3 * p:
                         v = random.choice(_g11)
                         if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                        ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                        ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
-                        ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys(
-                        ) and v.keys() != G9[i].keys() and v.keys() != G10[i].keys():
+                        ) and v.keys() != G3[i].keys() and v.keys(
+                        ) != G4[i].keys() and v.keys() != G5[i].keys(
+                        ) and v.keys() != G6[i].keys() and v.keys(
+                        ) != G7[i].keys() and v.keys() != G8[i].keys(
+                        ) and v.keys() != G9[i].keys() and v.keys(
+                        ) != G10[i].keys():
                             G11 = G11 + [v]
                 else:
                     v = random.choice(_g11)
@@ -367,7 +396,8 @@ class Timetable(models.Model):
                     ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
                     ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
                     ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys(
-                    ) and v.keys() != G9[i].keys() and v.keys() != G10[i].keys():
+                    ) and v.keys() != G9[i].keys() and v.keys() != G10[i].keys(
+                    ):
                         G11 = G11 + [v]
             c = 0
             while len(G12) == i:
@@ -386,11 +416,12 @@ class Timetable(models.Model):
                     if c > 3 * p:
                         v = random.choice(_g12)
                         if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                        ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                        ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
-                        ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys(
-                        ) and v.keys() != G9[i].keys() and v.keys() != G10[i].keys(
-                        ) and v.keys() != G11[i].keys():
+                        ) and v.keys() != G3[i].keys() and v.keys(
+                        ) != G4[i].keys() and v.keys() != G5[i].keys(
+                        ) and v.keys() != G6[i].keys() and v.keys(
+                        ) != G7[i].keys() and v.keys() != G8[i].keys(
+                        ) and v.keys() != G9[i].keys() and v.keys(
+                        ) != G10[i].keys() and v.keys() != G11[i].keys():
                             G12 = G12 + [v]
 
                 else:
@@ -430,6 +461,10 @@ class Timetable(models.Model):
         self.sorted_grade_10 = G10
         self.sorted_grade_11 = G11
         self.sorted_grade_12 = G12
+        self.save()
+        # print(G1, G2, G3, G4, G5, G6, G7, G8, G9,G10, G11, G12)
+        self.used_once = True
+        self.save()
         return self.compile_timetable()
 
     def show_timetable(self):
@@ -437,8 +472,15 @@ class Timetable(models.Model):
         pass
 
     def comparision_operator(self):
+        compare = ""
         # makes a comparable string so that the timetable can be compared with only a single parameter
-        pass
+        for i in self.compiled_timetable:
+            compare += (i.strip()).lower()
+            # compare = "grade"
+            pass
+            compare += ((self.compiled_timetable[i].values()).strip()).lower()
+            self.compare = compare
+            return compare
 
     def make_other_case(self):
         # makes other case of timetable, other than the currently made timetable
@@ -449,11 +491,220 @@ class Timetable(models.Model):
 
     def compile_timetable(self):
         a = {
-            "grade_1": self.sorted_grade_1, "grade_2": self.sorted_grade_2, "grade_3": self.sorted_grade_3, "grade_4": self.sorted_grade_4, "grade_5": self.sorted_grade_5, "grade_6": self.sorted_grade_6, "grade_7": self.sorted_grade_7, "grade_8": self.sorted_grade_8, "grade_9": self.sorted_grade_9, "grade_10": self.sorted_grade_10, "grade_11": self.sorted_grade_11, "grade_12": self.sorted_grade_12}
-        self.compiled_timetable = json.dumps(a, sort_keys=True, indent=4)
+            "grade_1": self.sorted_grade_1,
+            "grade_2": self.sorted_grade_2,
+            "grade_3": self.sorted_grade_3,
+            "grade_4": self.sorted_grade_4,
+            "grade_5": self.sorted_grade_5,
+            "grade_6": self.sorted_grade_6,
+            "grade_7": self.sorted_grade_7,
+            "grade_8": self.sorted_grade_8,
+            "grade_9": self.sorted_grade_9,
+            "grade_10": self.sorted_grade_10,
+            "grade_11": self.sorted_grade_11,
+            "grade_12": self.sorted_grade_12
+        }
+        self.compiled_timetable = a
+        self.timetable = json.dumps(a)
+        self.save()
         return self.compiled_timetable
+
+    def get_classes(self):
+        timetable = self.timetable
+        # print("grade_1:")
+        # print(dict(json.loads(timetable))['grade_1'])
+
+        # print(dict(timetable))
+        self.sorted_grade_1 = dict(json.loads(timetable))["grade_1"]
+        self.sorted_grade_2 = dict(json.loads(timetable))["grade_2"]
+        self.sorted_grade_3 = dict(json.loads(timetable))["grade_3"]
+        self.sorted_grade_4 = dict(json.loads(timetable))["grade_4"]
+        self.sorted_grade_5 = dict(json.loads(timetable))["grade_5"]
+        self.sorted_grade_6 = dict(json.loads(timetable))["grade_6"]
+        self.sorted_grade_7 = dict(json.loads(timetable))["grade_7"]
+        self.sorted_grade_8 = dict(json.loads(timetable))["grade_8"]
+        self.sorted_grade_9 = dict(json.loads(timetable))["grade_9"]
+        self.sorted_grade_10 = dict(json.loads(timetable))["grade_10"]
+        self.sorted_grade_11 = dict(json.loads(timetable))["grade_11"]
+        self.sorted_grade_12 = dict(json.loads(timetable))["grade_12"]
 
     def compile_classes(self):
         a = {
-            "grade_1": self.grade_1, "grade_2": self.grade_2, "grade_3": self.grade_3, "grade_4": self.grade_4, "grade_5": self.grade_5, "grade_6": self.grade_6, "grade_7": self.grade_7, "grade_8": self.grade_8, "grade_9": self.grade_9, "grade_10": self.grade_10, "grade_11": self.grade_11, "grade_12": self.grade_12}
+            "grade_1": self.grade_1,
+            "grade_2": self.grade_2,
+            "grade_3": self.grade_3,
+            "grade_4": self.grade_4,
+            "grade_5": self.grade_5,
+            "grade_6": self.grade_6,
+            "grade_7": self.grade_7,
+            "grade_8": self.grade_8,
+            "grade_9": self.grade_9,
+            "grade_10": self.grade_10,
+            "grade_11": self.grade_11,
+            "grade_12": self.grade_12
+        }
         return json.dumps(a, sort_keys=True, indent=4)
+
+    def period_wise(self):
+        self.get_classes()
+        # print(self.compiled_timetable)
+        g1 = self.sorted_grade_1
+        g2 = self.sorted_grade_2
+        g3 = self.sorted_grade_3
+        g4 = self.sorted_grade_4
+        g5 = self.sorted_grade_5
+        g6 = self.sorted_grade_6
+        g7 = self.sorted_grade_7
+        g8 = self.sorted_grade_8
+        g9 = self.sorted_grade_9
+        g10 = self.sorted_grade_10
+        g11 = self.sorted_grade_11
+        g12 = self.sorted_grade_12
+
+        period_1 = []
+        period_2 = []
+        period_3 = []
+        period_4 = []
+        period_5 = []
+        period_6 = []
+        period_7 = []
+        period_8 = []
+        period_9 = []
+        period_10 = []
+        period_11 = []
+        period_12 = []
+        for i in range(len(g1)):
+            for j in range(1, 13):
+                locals()[f'period_{i+1}'].append((locals()[f'g{j}'])[i])
+
+        self.period_1 = period_1
+        self.period_2 = period_2
+        self.period_3 = period_3
+        self.period_4 = period_4
+        self.period_5 = period_5
+        self.period_6 = period_6
+        self.period_7 = period_7
+        self.period_8 = period_8
+        self.period_9 = period_9
+        self.period_10 = period_10
+        self.period_11 = period_11
+        self.period_12 = period_12
+        print("period1")
+        print(period_1)
+        return [period_1, period_2, period_3, period_4, period_5, period_6, period_7, period_8, period_9, period_10, period_11, period_12]
+
+    def output_format(self):
+        self.period_wise()
+        t_1 = []
+        t_2 = []
+        t_3 = []
+        t_4 = []
+        t_5 = []
+        t_6 = []
+        t_7 = []
+        t_8 = []
+        t_9 = []
+        t_10 = []
+        t_11 = []
+        t_12 = []
+
+        for i in (self.period_1):
+            if i != "lunch":
+                for v in i.values():
+                    t_1.append(v)
+            else:
+                print(i)
+                t_1.append("Lunch")
+
+        for i in (self.period_2):
+            if i != "lunch":
+
+                for v in i.values():
+                    t_2.append(v)
+            else:
+                t_2.append("Lunch")
+
+        for i in (self.period_3):
+            if i != "lunch":
+
+                for v in i.values():
+                    t_3.append(v)
+            else:
+                t_3.append("Lunch")
+
+        for i in (self.period_4):
+            if i != "lunch":
+
+                for v in i.values():
+                    t_4.append(v)
+            else:
+                t_4.append("Lunch")
+        for i in (self.period_5):
+            if i != "lunch":
+
+                for v in i.values():
+                    t_5.append(v)
+            else:
+                t_5.append("Lunch")
+        for i in (self.period_6):
+            if i != "lunch":
+
+                for v in i.values():
+                    t_6.append(v)
+            else:
+                t_6.append("Lunch")
+        for i in (self.period_7):
+            if i != "lunch":
+
+                for v in i.values():
+                    t_7.append(v)
+            else:
+                t_7.append("Lunch")
+        for i in (self.period_8):
+            if i != "lunch":
+
+                for v in i.values():
+                    t_8.append(v)
+            else:
+                t_8.append("Lunch")
+        for i in (self.period_9):
+            if i != "lunch":
+
+                for v in i.values():
+                    t_9.append(v)
+            else:
+                t_9.append("Lunch")
+        for i in (self.period_10):
+            if i != "lunch":
+
+                for v in i.values():
+                    t_10.append(v)
+            else:
+                t_10.append("Lunch")
+        for i in (self.period_11):
+            if i != "lunch":
+
+                for v in i.values():
+                    t_11.append(v)
+            else:
+                t_11.append("Lunch")
+        for i in (self.period_12):
+            if i != "lunch":
+
+                for v in i.values():
+                    t_12.append(v)
+            else:
+                t_12.append("Lunch")
+        self.t_1 = t_1
+        self.t_2 = t_2
+        self.t_3 = t_3
+        self.t_4 = t_4
+        self.t_5 = t_5
+        self.t_6 = t_6
+        self.t_7 = t_7
+        self.t_8 = t_8
+        self.t_9 = t_9
+        self.t_10 = t_10
+        self.t_11 = t_11
+        self.t_12 = t_12
+        self.save()

@@ -3,166 +3,210 @@
 {% block body %}
 
 <!-- Navbar -->
-    
-    <!-- Top part -->
-    <div
-      class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light"
-    >
-      <div class="col-md-5 p-lg-5 mx-auto my-5">
-        <!-- TODO: Add image background -->
-        <h1 class="display-4 fw-normal">Timetable Maker</h1>
-        <h2 class="display-8">Computer project</h2>
-        <p class="lead fw-normal">Smart, Efficient and ___</p>
-        <a class="btn btn-outline-dark" href="{% url 'timetable:main_form' %}">Try it</a>
-      </div>
-    </div>
 
-    <!-- Adding about info -->
-    <section class="py-5 text-center container">
-      <div class="row py-lg-5">
-        <div class="col-lg-6 col-md-8 mx-auto">
-          <h1 class="fw-light" id="about">About</h1>
-          <p class="lead text-muted">
-            We have created a program that automatically creates a customized
-            and personalized timetable with certain inputs from users.
-            Timetables prevent waste of time and energy: The timetable shows
-            exactly what is to be done at a particular time. It, thus, directs
-            the attention of the teacher to one thing at a time. Thus, one's
-            energy is automatically directed in a particular direction which
-            prevents waste of time and energy.
-          </p>
-          <p>
-            <a href="#" class="btn btn-primary my-2">Top</a>
-          </p>
-        </div>
-      </div>
-    </section>
+<!-- Top part -->
 
-    <!-- Features column -->
-    <h1 class="text-center fw-light">Features</h1>
-    <br />
-    <main>
-      <div class="m-2 row row-cols-1 row-cols-md-3 mb-3 text-center">
-        <div class="col">
-          <div class="card mb-1 rounded-3 shadow-sm border-info-subtle">
-            <div class="card-header py-3 text-bg-info">
-              <h4 class="my-0 fw-normal">Simple UI</h4>
-            </div>
-            <div class="card-body">
-              <ul class="list-unstyled mt-3 mb-4">
-                <li>A user friendly and easy to use UI</li>
-                <br>
-                <li><img 
-                    class="rounded"
-                    width="350"
-                    src="https://firebasestorage.googleapis.com/v0/b/discord-uploads.appspot.com/o/SCR-20230121-tq7.png?alt=media&token=ecb94890-91b5-44f2-b32e-d9d7d2df1ed0" alt=""></li>
-                <br />
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card mb-4 rounded-3 shadow-sm border-danger-subtle">
-            <div class="card-header py-3 text-bg-danger border-danger">
-              <h4 class="my-0 fw-normal">Multiple Timetables</h4>
-            </div>
-            <div class="card-body">
-              <ul class="list-unstyled mt-3 mb-4">
-                <li>
-                  To make multiple timetables, with the same input, all you've
-                  to do is click
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card mb-4 rounded-3 shadow-sm border-warning-subtle">
-            <div class="card-header py-3 text-bg-warning border-warning">
-              <h4 class="my-0 fw-normal">Customizable input</h4>
-            </div>
-            <div class="card-body">
-              <ul class="list-unstyled mt-3 mb-4">
-                <li>You can customise your input as u want it to be!</li>
-                <br />
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
+<div class="position-relative m-md-3 text-center bg-light">
+  <div
+    style="
+      background-image: url('https://firebasestorage.googleapis.com/v0/b/discord-uploads.appspot.com/o/2494bd24d94c7c07aa44279f5d3e9591.jpg?alt=media&token=64b47e57-826c-41e6-99d1-b2eef584df3b');
+      background-size: 2000px;
+    "
+    class="overflow-visible bg-img mx-auto"
+  >
+    <br /><br /><br /><br /><br />
+    <h1 class="display-4 text-white fw-normal">Timetable Maker</h1>
+    <h2 class="display-8 text-white">Computer project</h2>
+    <p class="lead fw-normal text-white">Smart, Efficient and Simple</p>
     <br /><br /><br />
-
-    <!-- Try it out part -->
-    <div class="d-grid gap-2 col-6 mx-auto">
-      <a href="{% url 'timetable:main_form' %}" class="text-center btn btn-success btn-lg">Try it out</a>
+    {% comment %}
+    <a class="btn btn-btn-outline-light" href="{% url 'timetable:main_form' %}"
+      >Try it</a
+    >
+    {% endcomment %}
+  </div>
+</div>
+<!-- Adding about info -->
+<section class="py-5 text-center container">
+  <div class="row py-lg-5">
+    <div class="col-lg-6 col-md-8 mx-auto">
+      <h1 class="fw-light" id="about">About</h1>
+      <p class="lead text-muted">
+        We have created a program that automatically creates a customized and
+        personalized timetable with certain inputs from users. Timetables
+        prevent waste of time and energy: The timetable shows exactly what is to
+        be done at a particular time. It, thus, directs the attention of the
+        teacher to one thing at a time. Thus, one's energy is automatically
+        directed in a particular direction which prevents waste of time and
+        energy.
+      </p>
+      <p>
+        <a href="#" class="btn btn-primary my-2">Top</a>
+      </p>
     </div>
+  </div>
+</section>
 
-    <!-- Adding footer -->
-    <div class="container">
-      <footer
-        class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top"
+<!-- Features column -->
+<h1 class="text-center fw-light">Features</h1>
+<br />
+<main>
+  <div class="m-2 row row-cols-1 row-cols-md-3 mb-3 text-center">
+    <div class="col">
+      <div class="card mb-1 rounded-3 shadow-sm border-info-subtle">
+        <div class="card-header py-3 text-bg-info">
+          <h4 class="my-0 fw-normal">Simple UI</h4>
+        </div>
+        <div class="card-body">
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>A user friendly and easy to use UI</li>
+            <br />
+            <li>
+              <img
+              height="200"
+                class="rounded"
+                width="350"
+                src="https://firebasestorage.googleapis.com/v0/b/discord-uploads.appspot.com/o/SCR-20230121-tq7.png?alt=media&token=ecb94890-91b5-44f2-b32e-d9d7d2df1ed0"
+                alt=""
+              />
+            </li>
+            <br />
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card mb-4 rounded-3 shadow-sm border-danger-subtle">
+        <div class="card-header py-3 text-bg-danger border-danger">
+          <h4 class="my-0 fw-normal">Downloadable timetable</h4>
+        </div>
+        <div class="card-body">
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>You can download the timetables made, just by clicking</li>
+            <br />
+            <li>
+              <img
+              height="200"
+                class="rounded"
+                width="350"
+                src="https://firebasestorage.googleapis.com/v0/b/discord-uploads.appspot.com/o/SCR-20230131-523.png?alt=media&token=88e5aec9-c762-4c24-8073-d60b31548b0c"
+                alt=""
+              />
+            </li>
+          <br>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card mb-4 rounded-3 shadow-sm border-warning-subtle">
+        <div class="card-header py-3 text-bg-warning border-warning">
+          <h4 class="my-0 fw-normal">Customizable input</h4>
+        </div>
+        <div class="card-body">
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>You can customise your input as u want it to be!</li>
+
+            <br />
+            <li>
+              <img
+                height="200"
+                class="rounded"
+                width="350"
+                src="https://firebasestorage.googleapis.com/v0/b/discord-uploads.appspot.com/o/SCR-20230131-57x.png?alt=media&token=8f490fa0-341e-4aa1-8d24-038f56179143"
+                alt=""
+              />
+            </li>
+          </ul>
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<br /><br /><br />
+
+<!-- Try it out part -->
+<div class="d-grid gap-2 col-6 mx-auto">
+  <a
+    href="{% url 'timetable:main_form' %}"
+    class="text-center btn btn-success btn-lg"
+    >Try it out</a
+  >
+</div>
+
+<!-- Adding footer -->
+<div class="container">
+  <footer
+    class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top"
+  >
+    <div class="col mb-3">
+      <p
+        href="/"
+        class="fs-2 text-lg-start d-flex align-items-center mb-3 link-dark text-decoration-none"
       >
-        <div class="col mb-3">
-          <p
-            href="/"
-            class="fs-2 text-lg-start d-flex align-items-center mb-3 link-dark text-decoration-none"
-          >
-            Timetable Maker
-          </p>
-          <p class="text-muted">&nbsp;© 2022</p>
-        </div>
-
-        <div class="col mb-3"></div>
-
-        <div class="col mb-3">
-          <h5 id="contact">Address</h5>
-          <ul class="nav flex-column">
-            <li class="nav-item mb-2">
-              <span href="#" class="nav-link p-0 text-muted"
-                >Koto-ku <br />
-                Tokyo, Japan</span
-              >
-            </li>
-          </ul>
-        </div>
-
-        <div class="col mb-3">
-          <h5>Contact</h5>
-          <ul class="nav flex-column">
-            <li class="nav-item mb-2">
-              <span href="#" class="nav-link p-0 text-muted"
-                >Phone: +81 080 1876 8787</span
-              >
-            </li>
-            <li class="nav-item mb-2">
-              <span href="#" class="nav-link p-0 text-muted"
-                >Email: doubtme@memail.com</span
-              >
-            </li>
-          </ul>
-        </div>
-
-        <div class="col mb-3">
-          <h5 class="text-success">Made by</h5>
-          <ul class="nav flex-column">
-            <li class="nav-item mb-2">
-              <span href="#" class="nav-link p-0 text-primary-emphasis"
-                >Praveena Kiran</span
-              >
-            </li>
-            <li class="nav-item mb-2">
-              <span href="#" class="nav-link p-0 text-primary-emphasis">Arron Reign</span>
-            </li>
-            <li class="nav-item mb-2">
-              <span href="#" class="nav-link p-0 text-primary-emphasis">Yuv Ved</span>
-            </li>
-            <li class="nav-item mb-2">
-              <span href="#" class="nav-link p-0 text-primary-emphasis">Rishit Verma</span>
-            </li>
-          </ul>
-        </div>
-      </footer>
+        Timetable Maker
+      </p>
+      <p class="text-muted">&nbsp;© 2022</p>
     </div>
+
+    <div class="col mb-3"></div>
+
+    <div class="col mb-3">
+      <h5 id="contact">Address</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2">
+          <span href="#" class="nav-link p-0 text-muted"
+            >Koto-ku <br />
+            Tokyo, Japan</span
+          >
+        </li>
+      </ul>
+    </div>
+
+    <div class="col mb-3">
+      <h5>Contact</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2">
+          <span href="#" class="nav-link p-0 text-muted"
+            >Phone: +81 080 1876 8787</span
+          >
+        </li>
+        <li class="nav-item mb-2">
+          <span href="#" class="nav-link p-0 text-muted"
+            >Email: doubtme@memail.com</span
+          >
+        </li>
+      </ul>
+    </div>
+
+    <div class="col mb-3">
+      <h5 class="text-success">Made by</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2">
+          <span href="#" class="nav-link p-0 text-primary-emphasis"
+            >Rishit Verma</span
+          >
+        </li>
+        <li class="nav-item mb-2">
+          <span href="#" class="nav-link p-0 text-primary-emphasis"
+            >Praveena Kiran</span
+          >
+        </li>
+        <li class="nav-item mb-2">
+          <span href="#" class="nav-link p-0 text-primary-emphasis"
+            >Arron Regin</span
+          >
+        </li>
+        <li class="nav-item mb-2">
+          <span href="#" class="nav-link p-0 text-primary-emphasis"
+            >Yuv Ved</span
+          >
+        </li>
+      </ul>
+    </div>
+  </footer>
+</div>
 
 {% endblock body %}
