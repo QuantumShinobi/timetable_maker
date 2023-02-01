@@ -35,13 +35,13 @@
     <script src="{% static 'main.js' %}"></script>
     <link rel="stylesheet" href="{% static 'style.css' %}" />
   
-    {% comment %}
+
     <link
       rel="shortcut icon"
-      href="https://raw.githubusercontent.com/IamEinstein/Djank/gh-pages/sources/bank-icon.jpg"
+      href="https://firebasestorage.googleapis.com/v0/b/discord-uploads.appspot.com/o/schedule-planner-icon-in-flat-design-clock-with-calendar-vector.png?alt=media&token=1a4a14d6-d2dd-4752-ba48-2a25a3fbb6ca"
       type="image/x-icon"
     />
-    {% endcomment %}
+
     <style>
       body {
         margin: 0.002%;
@@ -53,8 +53,13 @@
   <body>
     <nav id="navbar "class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
-        &nbsp;&nbsp;
-        <a class="navbar-brand card-header" href="{% url 'timetable:home' %}">Timetable Maker</a>
+        &nbsp;
+      
+        <a class="navbar-brand card-header" href="{% url 'timetable:home' %}">
+          <img src="https://firebasestorage.googleapis.com/v0/b/discord-uploads.appspot.com/o/schedule-planner-icon-in-flat-design-clock-with-calendar-vector.png?alt=media&token=1a4a14d6-d2dd-4752-ba48-2a25a3fbb6ca" width="73" alt="">
+          &nbsp;
+          Timetable Maker
+        </a>
         <button
           class="navbar-toggler"
           type="button"
@@ -73,12 +78,12 @@
               <a
                 class="btn btn-outline-info m-1"
                 aria-current="page"
-                href="#about"
+                href="{% url 'timetable:home' %}#about"
                 >About</a
               >&nbsp;
             </li>
             <li class="nav-item">
-              <a class="btn btn-outline-info m-1" href="#contact">Contact</a>
+              <a class="btn btn-outline-info m-1" href="{% url 'timetable:home' %}#contact">Contact</a>
             </li>
             <li class="nav-item">
               <a class="btn btn-outline-success m-1" href="{% url 'timetable:main_form' %}"

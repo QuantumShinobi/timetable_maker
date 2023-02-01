@@ -19,7 +19,7 @@ class Teacher(models.Model):
 
 class Timetable(models.Model):
     periods = models.IntegerField(default=10)
-    uuid = models.UUIDField(default=uuid.uuid4(), unique=True)
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True)
     lunch_period = models.IntegerField(default=5)
     len_per_period = models.IntegerField(default=40)
     no_of_teachers = models.IntegerField(default=10)
@@ -27,13 +27,10 @@ class Timetable(models.Model):
                                   default=datetime.time(hour=9,
                                                         minute=0,
                                                         second=0))
-    end_time = models.TimeField(blank=True,
-                                default=datetime.time(hour=15,
-                                                      minute=0,
-                                                      second=0))
     teachers = models.ManyToManyField(Teacher)
     timetable = models.JSONField(null=True, default=None, editable=True)
     used_once = models.BooleanField(default=False)
+    timings = models.JSONField(null=True, editable=True)
     # sorted_grade_1 = models.JSONField(null=True)
     # sorted_grade_2 = models.JSONField(null=True)
     # sorted_grade_3 = models.JSONField(null=True)
@@ -145,327 +142,329 @@ class Timetable(models.Model):
         _g10 = []
         _g11 = []
         _g12 = []
-
-        for i in range(0, p - 1, 1):
-            c = 0
-            while len(G2) == i:
-                if len(g2) > 0:
-                    v = random.choice(g2)
-                    if v.keys() != G1[i].keys():
-                        G2 = G2 + [v]
-                        g2.remove(v)
-                        _g2 = _g2 + [v]
-                    c = c + 1
-                    if c > 3 * p:
+        try:
+            for i in range(0, p - 1, 1):
+                c = 0
+                while len(G2) == i:
+                    if len(g2) > 0:
+                        v = random.choice(g2)
+                        if v.keys() != G1[i].keys():
+                            G2 = G2 + [v]
+                            g2.remove(v)
+                            _g2 = _g2 + [v]
+                        c = c + 1
+                        if c > 3 * p:
+                            v = random.choice(_g2)
+                            if v.keys() != G1[i].keys():
+                                G2 = G2 + [v]
+                    else:
                         v = random.choice(_g2)
                         if v.keys() != G1[i].keys():
                             G2 = G2 + [v]
-                else:
-                    v = random.choice(_g2)
-                    if v.keys() != G1[i].keys():
-                        G2 = G2 + [v]
-            c = 0
-            while len(G3) == i:
+                c = 0
+                while len(G3) == i:
 
-                if len(g3) > 0:
-                    v = random.choice(g3)
-                    if v.keys() != G1[i].keys() and v.keys() != G2[i].keys():
-                        G3 = G3 + [v]
-                        g3.remove(v)
-                        _g3 = _g3 + [v]
-                    c = c + 1
-                    if c > 3 * p:
-                        v = random.choice(_g3)
-                        if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                        ):
+                    if len(g3) > 0:
+                        v = random.choice(g3)
+                        if v.keys() != G1[i].keys() and v.keys() != G2[i].keys():
                             G3 = G3 + [v]
+                            g3.remove(v)
+                            _g3 = _g3 + [v]
+                        c = c + 1
+                        if c > 3 * p:
+                            v = random.choice(_g3)
+                            if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
+                            ):
+                                G3 = G3 + [v]
 
-                else:
-                    v = random.choice(_g3)
-                    if v.keys() != G1[i].keys() and v.keys() != G2[i].keys():
-                        G3 = G3 + [v]
-            c = 0
-            while len(G4) == i:
+                    else:
+                        v = random.choice(_g3)
+                        if v.keys() != G1[i].keys() and v.keys() != G2[i].keys():
+                            G3 = G3 + [v]
+                c = 0
+                while len(G4) == i:
 
-                if len(g4) > 0:
-                    v = random.choice(g4)
-                    if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                    ) and v.keys() != G3[i].keys():
-                        G4 = G4 + [v]
-                        g4.remove(v)
-                        _g4 = _g4 + [v]
-                    c = c + 1
-                    if c > 3 * p:
+                    if len(g4) > 0:
+                        v = random.choice(g4)
+                        if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
+                        ) and v.keys() != G3[i].keys():
+                            G4 = G4 + [v]
+                            g4.remove(v)
+                            _g4 = _g4 + [v]
+                        c = c + 1
+                        if c > 3 * p:
+                            v = random.choice(_g4)
+                            if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
+                            ) and v.keys() != G3[i].keys():
+                                G4 = G4 + [v]
+                    else:
                         v = random.choice(_g4)
                         if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
                         ) and v.keys() != G3[i].keys():
                             G4 = G4 + [v]
-                else:
-                    v = random.choice(_g4)
-                    if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                    ) and v.keys() != G3[i].keys():
-                        G4 = G4 + [v]
-            c = 0
-            while len(G5) == i:
-                if len(g5) > 0:
-                    v = random.choice(g5)
-                    if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                    ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                    ):
-                        G5 = G5 + [v]
-                        g5.remove(v)
-                        _g5 = _g5 + [v]
-                    c = c + 1
-                    if c > 3 * p:
+                c = 0
+                while len(G5) == i:
+                    if len(g5) > 0:
+                        v = random.choice(g5)
+                        if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
+                        ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
+                        ):
+                            G5 = G5 + [v]
+                            g5.remove(v)
+                            _g5 = _g5 + [v]
+                        c = c + 1
+                        if c > 3 * p:
+                            v = random.choice(_g5)
+                            if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
+                            ) and v.keys() != G3[i].keys() and v.keys(
+                            ) != G4[i].keys():
+                                G5 = G5 + [v]
+
+                    else:
                         v = random.choice(_g5)
                         if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                        ) and v.keys() != G3[i].keys() and v.keys(
-                        ) != G4[i].keys():
+                        ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
+                        ):
                             G5 = G5 + [v]
-
-                else:
-                    v = random.choice(_g5)
-                    if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                    ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                    ):
-                        G5 = G5 + [v]
-            c = 0
-            while len(G6) == i:
-                if len(g6) > 0:
-                    v = random.choice(g6)
-                    if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                    ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                    ) and v.keys() != G5[i].keys():
-                        G6 = G6 + [v]
-                        g6.remove(v)
-                        _g6 = _g6 + [v]
-                    c = c + 1
-                    if c > 3 * p:
+                c = 0
+                while len(G6) == i:
+                    if len(g6) > 0:
+                        v = random.choice(g6)
+                        if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
+                        ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
+                        ) and v.keys() != G5[i].keys():
+                            G6 = G6 + [v]
+                            g6.remove(v)
+                            _g6 = _g6 + [v]
+                        c = c + 1
+                        if c > 3 * p:
+                            v = random.choice(_g6)
+                            if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
+                            ) and v.keys() != G3[i].keys() and v.keys(
+                            ) != G4[i].keys() and v.keys() != G5[i].keys():
+                                G6 = G6 + [v]
+                    else:
                         v = random.choice(_g6)
                         if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                        ) and v.keys() != G3[i].keys() and v.keys(
-                        ) != G4[i].keys() and v.keys() != G5[i].keys():
+                        ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
+                        ) and v.keys() != G5[i].keys():
                             G6 = G6 + [v]
-                else:
-                    v = random.choice(_g6)
-                    if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                    ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                    ) and v.keys() != G5[i].keys():
-                        G6 = G6 + [v]
-            c = 0
-            while len(G7) == i:
-                if len(g7) > 0:
-                    v = random.choice(g7)
-                    if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                    ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                    ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
-                    ):
-                        G7 = G7 + [v]
-                        g7.remove(v)
-                        _g7 = _g7 + [v]
-                    c = c + 1
-                    if c > 3 * p:
+                c = 0
+                while len(G7) == i:
+                    if len(g7) > 0:
+                        v = random.choice(g7)
+                        if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
+                        ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
+                        ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
+                        ):
+                            G7 = G7 + [v]
+                            g7.remove(v)
+                            _g7 = _g7 + [v]
+                        c = c + 1
+                        if c > 3 * p:
+                            v = random.choice(_g7)
+                            if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
+                            ) and v.keys() != G3[i].keys() and v.keys(
+                            ) != G4[i].keys() and v.keys() != G5[i].keys(
+                            ) and v.keys() != G6[i].keys():
+                                G7 = G7 + [v]
+                    else:
                         v = random.choice(_g7)
                         if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                        ) and v.keys() != G3[i].keys() and v.keys(
-                        ) != G4[i].keys() and v.keys() != G5[i].keys(
-                        ) and v.keys() != G6[i].keys():
+                        ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
+                        ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
+                        ):
                             G7 = G7 + [v]
-                else:
-                    v = random.choice(_g7)
-                    if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                    ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                    ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
-                    ):
-                        G7 = G7 + [v]
-            c = 0
-            while len(G8) == i:
-                if len(g8) > 0:
-                    v = random.choice(g8)
-                    if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                    ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                    ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
-                    ) and v.keys() != G7[i].keys():
-                        G8 = G8 + [v]
-                        g8.remove(v)
-                        _g8 = _g8 + [v]
-                    c = c + 1
-                    if c > 3 * p:
+                c = 0
+                while len(G8) == i:
+                    if len(g8) > 0:
+                        v = random.choice(g8)
+                        if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
+                        ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
+                        ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
+                        ) and v.keys() != G7[i].keys():
+                            G8 = G8 + [v]
+                            g8.remove(v)
+                            _g8 = _g8 + [v]
+                        c = c + 1
+                        if c > 3 * p:
+                            v = random.choice(_g8)
+                            if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
+                            ) and v.keys() != G3[i].keys() and v.keys(
+                            ) != G4[i].keys() and v.keys() != G5[i].keys(
+                            ) and v.keys() != G6[i].keys() and v.keys(
+                            ) != G7[i].keys():
+                                G8 = G8 + [v]
+
+                    else:
                         v = random.choice(_g8)
                         if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                        ) and v.keys() != G3[i].keys() and v.keys(
-                        ) != G4[i].keys() and v.keys() != G5[i].keys(
-                        ) and v.keys() != G6[i].keys() and v.keys(
-                        ) != G7[i].keys():
+                        ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
+                        ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
+                        ) and v.keys() != G7[i].keys():
                             G8 = G8 + [v]
-
-                else:
-                    v = random.choice(_g8)
-                    if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                    ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                    ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
-                    ) and v.keys() != G7[i].keys():
-                        G8 = G8 + [v]
-            c = 0
-            while len(G9) == i:
-                if len(g9) > 0:
-                    v = random.choice(g9)
-                    if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                    ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                    ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
-                    ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys(
-                    ):
-                        G9 = G9 + [v]
-                        g9.remove(v)
-                        _g9 = _g9 + [v]
-                    c = c + 1
-                    if c > 3 * p:
+                c = 0
+                while len(G9) == i:
+                    if len(g9) > 0:
+                        v = random.choice(g9)
+                        if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
+                        ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
+                        ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
+                        ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys(
+                        ):
+                            G9 = G9 + [v]
+                            g9.remove(v)
+                            _g9 = _g9 + [v]
+                        c = c + 1
+                        if c > 3 * p:
+                            v = random.choice(_g9)
+                            if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
+                            ) and v.keys() != G3[i].keys() and v.keys(
+                            ) != G4[i].keys() and v.keys() != G5[i].keys(
+                            ) and v.keys() != G6[i].keys() and v.keys(
+                            ) != G7[i].keys() and v.keys() != G8[i].keys():
+                                G9 = G9 + [v]
+                    else:
                         v = random.choice(_g9)
                         if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                        ) and v.keys() != G3[i].keys() and v.keys(
-                        ) != G4[i].keys() and v.keys() != G5[i].keys(
-                        ) and v.keys() != G6[i].keys() and v.keys(
-                        ) != G7[i].keys() and v.keys() != G8[i].keys():
+                        ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
+                        ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
+                        ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys(
+                        ):
                             G9 = G9 + [v]
-                else:
-                    v = random.choice(_g9)
-                    if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                    ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                    ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
-                    ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys(
-                    ):
-                        G9 = G9 + [v]
-            c = 0
-            while len(G10) == i:
-                if len(g10) > 0:
-                    v = random.choice(g10)
-                    if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                    ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                    ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
-                    ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys(
-                    ) and v.keys() != G9[i].keys():
-                        G10 = G10 + [v]
-                        g10.remove(v)
-                        _g10 = _g10 + [v]
-                    c = c + 1
-                    if c > 3 * p:
-                        v = random.choice(_g10)
+                c = 0
+                while len(G10) == i:
+                    if len(g10) > 0:
+                        v = random.choice(g10)
                         if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                        ) and v.keys() != G3[i].keys() and v.keys(
-                        ) != G4[i].keys() and v.keys() != G5[i].keys(
-                        ) and v.keys() != G6[i].keys() and v.keys(
-                        ) != G7[i].keys() and v.keys() != G8[i].keys(
+                        ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
+                        ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
+                        ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys(
                         ) and v.keys() != G9[i].keys():
                             G10 = G10 + [v]
+                            g10.remove(v)
+                            _g10 = _g10 + [v]
+                        c = c + 1
+                        if c > 3 * p:
+                            v = random.choice(_g10)
+                            if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
+                            ) and v.keys() != G3[i].keys() and v.keys(
+                            ) != G4[i].keys() and v.keys() != G5[i].keys(
+                            ) and v.keys() != G6[i].keys() and v.keys(
+                            ) != G7[i].keys() and v.keys() != G8[i].keys(
+                            ) and v.keys() != G9[i].keys():
+                                G10 = G10 + [v]
 
-                else:
-                    v = random.choice(_g10)
-                    if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                    ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                    ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
-                    ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys(
-                    ) and v.keys() != G9[i].keys():
-                        G10 = G10 + [v]
-            c = 0
-            while len(G11) == i:
-                if len(g11) > 0:
-                    v = random.choice(g11)
-                    if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                    ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                    ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
-                    ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys(
-                    ) and v.keys() != G9[i].keys() and v.keys() != G10[i].keys(
-                    ):
-                        G11 = G11 + [v]
-                        g11.remove(v)
-                        _g11 = _g11 + [v]
-                    c = c + 1
-                    if c > 3 * p:
+                    else:
+                        v = random.choice(_g10)
+                        if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
+                        ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
+                        ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
+                        ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys(
+                        ) and v.keys() != G9[i].keys():
+                            G10 = G10 + [v]
+                c = 0
+                while len(G11) == i:
+                    if len(g11) > 0:
+                        v = random.choice(g11)
+                        if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
+                        ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
+                        ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
+                        ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys(
+                        ) and v.keys() != G9[i].keys() and v.keys() != G10[i].keys(
+                        ):
+                            G11 = G11 + [v]
+                            g11.remove(v)
+                            _g11 = _g11 + [v]
+                        c = c + 1
+                        if c > 3 * p:
+                            v = random.choice(_g11)
+                            if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
+                            ) and v.keys() != G3[i].keys() and v.keys(
+                            ) != G4[i].keys() and v.keys() != G5[i].keys(
+                            ) and v.keys() != G6[i].keys() and v.keys(
+                            ) != G7[i].keys() and v.keys() != G8[i].keys(
+                            ) and v.keys() != G9[i].keys() and v.keys(
+                            ) != G10[i].keys():
+                                G11 = G11 + [v]
+                    else:
                         v = random.choice(_g11)
                         if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                        ) and v.keys() != G3[i].keys() and v.keys(
-                        ) != G4[i].keys() and v.keys() != G5[i].keys(
-                        ) and v.keys() != G6[i].keys() and v.keys(
-                        ) != G7[i].keys() and v.keys() != G8[i].keys(
-                        ) and v.keys() != G9[i].keys() and v.keys(
-                        ) != G10[i].keys():
+                        ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
+                        ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
+                        ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys(
+                        ) and v.keys() != G9[i].keys() and v.keys() != G10[i].keys(
+                        ):
                             G11 = G11 + [v]
-                else:
-                    v = random.choice(_g11)
-                    if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                    ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                    ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
-                    ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys(
-                    ) and v.keys() != G9[i].keys() and v.keys() != G10[i].keys(
-                    ):
-                        G11 = G11 + [v]
-            c = 0
-            while len(G12) == i:
-                if len(g12) > 0:
-                    v = random.choice(g12)
-                    if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                    ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                    ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
-                    ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys(
-                    ) and v.keys() != G9[i].keys() and v.keys() != G10[i].keys(
-                    ) and v.keys() != G11[i].keys():
-                        G12 = G12 + [v]
-                        g12.remove(v)
-                        _g12 = _g12 + [v]
-                    c = c + 1
-                    if c > 3 * p:
+                c = 0
+                while len(G12) == i:
+                    if len(g12) > 0:
+                        v = random.choice(g12)
+                        if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
+                        ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
+                        ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
+                        ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys(
+                        ) and v.keys() != G9[i].keys() and v.keys() != G10[i].keys(
+                        ) and v.keys() != G11[i].keys():
+                            G12 = G12 + [v]
+                            g12.remove(v)
+                            _g12 = _g12 + [v]
+                        c = c + 1
+                        if c > 3 * p:
+                            v = random.choice(_g12)
+                            if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
+                            ) and v.keys() != G3[i].keys() and v.keys(
+                            ) != G4[i].keys() and v.keys() != G5[i].keys(
+                            ) and v.keys() != G6[i].keys() and v.keys(
+                            ) != G7[i].keys() and v.keys() != G8[i].keys(
+                            ) and v.keys() != G9[i].keys() and v.keys(
+                            ) != G10[i].keys() and v.keys() != G11[i].keys():
+                                G12 = G12 + [v]
+
+                    else:
                         v = random.choice(_g12)
                         if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                        ) and v.keys() != G3[i].keys() and v.keys(
-                        ) != G4[i].keys() and v.keys() != G5[i].keys(
-                        ) and v.keys() != G6[i].keys() and v.keys(
-                        ) != G7[i].keys() and v.keys() != G8[i].keys(
-                        ) and v.keys() != G9[i].keys() and v.keys(
-                        ) != G10[i].keys() and v.keys() != G11[i].keys():
+                        ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
+                        ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
+                        ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys(
+                        ) and v.keys() != G9[i].keys() and v.keys() != G10[i].keys(
+                        ) and v.keys() != G11[i].keys():
                             G12 = G12 + [v]
 
-                else:
-                    v = random.choice(_g12)
-                    if v.keys() != G1[i].keys() and v.keys() != G2[i].keys(
-                    ) and v.keys() != G3[i].keys() and v.keys() != G4[i].keys(
-                    ) and v.keys() != G5[i].keys() and v.keys() != G6[i].keys(
-                    ) and v.keys() != G7[i].keys() and v.keys() != G8[i].keys(
-                    ) and v.keys() != G9[i].keys() and v.keys() != G10[i].keys(
-                    ) and v.keys() != G11[i].keys():
-                        G12 = G12 + [v]
-
-        G = [G1, G2, G3, G4, G5, G6, G7, G8, G9, G10, G11, G12]
-        for i in range(0, 12, 1):
-            G[i] = G[i][:np] + ['lunch'] + G[i][np:]
-        G1 = G[0]
-        G2 = G[1]
-        G3 = G[2]
-        G4 = G[3]
-        G5 = G[4]
-        G6 = G[5]
-        G7 = G[6]
-        G8 = G[7]
-        G9 = G[8]
-        G10 = G[9]
-        G11 = G[10]
-        G12 = G[11]
-        self.sorted_grade_1 = G1
-        self.sorted_grade_2 = G2
-        self.sorted_grade_3 = G3
-        self.sorted_grade_4 = G4
-        self.sorted_grade_5 = G5
-        self.sorted_grade_6 = G6
-        self.sorted_grade_7 = G7
-        self.sorted_grade_8 = G8
-        self.sorted_grade_9 = G9
-        self.sorted_grade_10 = G10
-        self.sorted_grade_11 = G11
-        self.sorted_grade_12 = G12
-        self.save()
-        # print(G1, G2, G3, G4, G5, G6, G7, G8, G9,G10, G11, G12)
-        self.used_once = True
-        self.save()
-        return self.compile_timetable()
+            G = [G1, G2, G3, G4, G5, G6, G7, G8, G9, G10, G11, G12]
+            for i in range(0, 12, 1):
+                G[i] = G[i][:np] + ['lunch'] + G[i][np:]
+            G1 = G[0]
+            G2 = G[1]
+            G3 = G[2]
+            G4 = G[3]
+            G5 = G[4]
+            G6 = G[5]
+            G7 = G[6]
+            G8 = G[7]
+            G9 = G[8]
+            G10 = G[9]
+            G11 = G[10]
+            G12 = G[11]
+            self.sorted_grade_1 = G1
+            self.sorted_grade_2 = G2
+            self.sorted_grade_3 = G3
+            self.sorted_grade_4 = G4
+            self.sorted_grade_5 = G5
+            self.sorted_grade_6 = G6
+            self.sorted_grade_7 = G7
+            self.sorted_grade_8 = G8
+            self.sorted_grade_9 = G9
+            self.sorted_grade_10 = G10
+            self.sorted_grade_11 = G11
+            self.sorted_grade_12 = G12
+            self.save()
+            # print(G1, G2, G3, G4, G5, G6, G7, G8, G9,G10, G11, G12)
+            self.used_once = True
+            self.save()
+            return self.compile_timetable()
+        except (KeyError, IndexError):
+            return False
 
     def show_timetable(self):
         # return the object in a single nested dictionary of the format {"grade":{timetable}}
@@ -543,7 +542,7 @@ class Timetable(models.Model):
             "grade_11": self.grade_11,
             "grade_12": self.grade_12
         }
-        return json.dumps(a, sort_keys=True, indent=4)
+        return json.dumps(a, indent=4)
 
     def period_wise(self):
         self.get_classes()
@@ -575,8 +574,11 @@ class Timetable(models.Model):
         period_12 = []
         for i in range(len(g1)):
             for j in range(1, 13):
-                locals()[f'period_{i+1}'].append((locals()[f'g{j}'])[i])
-
+                print(i, j)
+                try:
+                    locals()[f'period_{i+1}'].append((locals()[f'g{j}'])[i])
+                except (KeyError, IndexError):
+                    pass
         self.period_1 = period_1
         self.period_2 = period_2
         self.period_3 = period_3
@@ -589,9 +591,10 @@ class Timetable(models.Model):
         self.period_10 = period_10
         self.period_11 = period_11
         self.period_12 = period_12
-        print("period1")
-        print(period_1)
-        return [period_1, period_2, period_3, period_4, period_5, period_6, period_7, period_8, period_9, period_10, period_11, period_12]
+        return [
+            period_1, period_2, period_3, period_4, period_5, period_6,
+            period_7, period_8, period_9, period_10, period_11, period_12
+        ]
 
     def output_format(self):
         self.period_wise()
@@ -609,92 +612,295 @@ class Timetable(models.Model):
         t_12 = []
 
         for i in (self.period_1):
-            if i != "lunch":
-                for v in i.values():
-                    t_1.append(v)
-            else:
-                print(i)
+            try:
+                if (str(i.keys())).lower() != "lunch":
+                    for v in i.values():
+                        t_1.append(v)
+                else:
+                    t_1.append("Lunch")
+            except AttributeError:
                 t_1.append("Lunch")
 
         for i in (self.period_2):
-            if i != "lunch":
-
-                for v in i.values():
-                    t_2.append(v)
-            else:
+            try:
+                if (str(i.keys())).lower() != "lunch":
+                    for v in i.values():
+                        t_2.append(v)
+                else:
+                    t_2.append("Lunch")
+            except AttributeError:
                 t_2.append("Lunch")
 
         for i in (self.period_3):
-            if i != "lunch":
-
-                for v in i.values():
-                    t_3.append(v)
-            else:
+            try:
+                if (str(i.keys())).lower() != "lunch":
+                    for v in i.values():
+                        t_3.append(v)
+                else:
+                    t_3.append("Lunch")
+            except AttributeError:
                 t_3.append("Lunch")
 
         for i in (self.period_4):
-            if i != "lunch":
-
-                for v in i.values():
-                    t_4.append(v)
-            else:
+            try:
+                if (str(i.keys())).lower() != "lunch":
+                    for v in i.values():
+                        t_4.append(v)
+                else:
+                    t_4.append("Lunch")
+            except AttributeError:
                 t_4.append("Lunch")
+
         for i in (self.period_5):
-            if i != "lunch":
-
-                for v in i.values():
-                    t_5.append(v)
-            else:
+            try:
+                if (str(i.keys())).lower() != "lunch":
+                    for v in i.values():
+                        t_5.append(v)
+                else:
+                    t_5.append("Lunch")
+            except AttributeError:
                 t_5.append("Lunch")
-        for i in (self.period_6):
-            if i != "lunch":
 
-                for v in i.values():
-                    t_6.append(v)
-            else:
-                t_6.append("Lunch")
         for i in (self.period_7):
-            if i != "lunch":
-
-                for v in i.values():
-                    t_7.append(v)
-            else:
+            try:
+                if (str(i.keys())).lower() != "lunch":
+                    for v in i.values():
+                        t_7.append(v)
+                else:
+                    t_7.append("Lunch")
+            except AttributeError:
                 t_7.append("Lunch")
+
         for i in (self.period_8):
-            if i != "lunch":
-
-                for v in i.values():
-                    t_8.append(v)
-            else:
+            try:
+                if (str(i.keys())).lower() != "lunch":
+                    for v in i.values():
+                        t_8.append(v)
+                else:
+                    t_8.append("Lunch")
+            except AttributeError:
                 t_8.append("Lunch")
+
         for i in (self.period_9):
-            if i != "lunch":
-
-                for v in i.values():
-                    t_9.append(v)
-            else:
+            try:
+                if (str(i.keys())).lower() != "lunch":
+                    for v in i.values():
+                        t_9.append(v)
+                else:
+                    t_9.append("Lunch")
+            except AttributeError:
                 t_9.append("Lunch")
+
         for i in (self.period_10):
-            if i != "lunch":
-
-                for v in i.values():
-                    t_10.append(v)
-            else:
+            try:
+                if (str(i.keys())).lower() != "lunch":
+                    for v in i.values():
+                        t_10.append(v)
+                else:
+                    t_10.append("Lunch")
+            except AttributeError:
                 t_10.append("Lunch")
+
         for i in (self.period_11):
-            if i != "lunch":
-
-                for v in i.values():
-                    t_11.append(v)
-            else:
+            try:
+                if (str(i.keys())).lower() != "lunch":
+                    for v in i.values():
+                        t_11.append(v)
+                else:
+                    t_11.append("Lunch")
+            except AttributeError:
                 t_11.append("Lunch")
-        for i in (self.period_12):
-            if i != "lunch":
 
-                for v in i.values():
-                    t_12.append(v)
-            else:
+        for i in (self.period_12):
+            try:
+                if (str(i.keys())).lower() != "lunch":
+                    for v in i.values():
+                        t_12.append(v)
+                else:
+                    t_12.append("Lunch")
+            except AttributeError:
                 t_12.append("Lunch")
+        for i in (self.period_6):
+            try:
+                print(i)
+                if (str(i.keys())).lower() != "lunch":
+                    for v in i.values():
+                        t_6.append(v)
+                else:
+                    t_6.append("Lunch")
+            except AttributeError:
+                t_6.append("Lunch")
+        self.t_1 = t_1
+        self.t_2 = t_2
+        self.t_3 = t_3
+        self.t_4 = t_4
+        self.t_5 = t_5
+        self.t_6 = t_6
+        self.t_7 = t_7
+        self.t_8 = t_8
+        self.t_9 = t_9
+        self.t_10 = t_10
+        self.t_11 = t_11
+        self.t_12 = t_12
+        self.save()
+
+    def get_timings(self):
+        pst = []
+        st = str(self.start_time)
+        st = st.replace(":", "")
+        st = st[0:-2]
+        p = self.periods
+        pst = []
+        if st[0] == 0:
+            pst = pst+[st[1:]]
+        else:
+            pst = pst+[st]
+            mins = int(st[:2])*60+int(st[3:])
+            for i in range(0, p-1, 1):
+                mins = mins+(self.len_per_period)
+                pst = pst+[str(mins//60)+':'+str(mins % 60)]
+                if len(str(mins % 60)) == 1:
+                    pst[i+1] = pst[i+1]+'0'
+        while len(pst) < 11:
+            pst.append("-")
+        self.timings = json.dumps({"timings": pst})
+        self.save()
+        return pst
+
+    def output_teacher_wise(self):
+        self.period_wise()
+        t_1 = []
+        t_2 = []
+        t_3 = []
+        t_4 = []
+        t_5 = []
+        t_6 = []
+        t_7 = []
+        t_8 = []
+        t_9 = []
+        t_10 = []
+        t_11 = []
+        t_12 = []
+
+        for i in (self.period_1):
+            try:
+                if (str(i.keys())).lower() != "lunch":
+                    for v in i.keys():
+                        t_1.append(v)
+                else:
+                    t_1.append("Lunch")
+            except AttributeError:
+                t_1.append("Lunch")
+
+        for i in (self.period_2):
+            try:
+                if (str(i.keys())).lower() != "lunch":
+                    for v in i.keys():
+                        t_2.append(v)
+                else:
+                    t_2.append("Lunch")
+            except AttributeError:
+                t_2.append("Lunch")
+
+        for i in (self.period_3):
+            try:
+                if (str(i.keys())).lower() != "lunch":
+                    for v in i.keys():
+                        t_3.append(v)
+                else:
+                    t_3.append("Lunch")
+            except AttributeError:
+                t_3.append("Lunch")
+
+        for i in (self.period_4):
+            try:
+                if (str(i.keys())).lower() != "lunch":
+                    for v in i.keys():
+                        t_4.append(v)
+                else:
+                    t_4.append("Lunch")
+            except AttributeError:
+                t_4.append("Lunch")
+
+        for i in (self.period_5):
+            try:
+                if (str(i.keys())).lower() != "lunch":
+                    for v in i.keys():
+                        t_5.append(v)
+                else:
+                    t_5.append("Lunch")
+            except AttributeError:
+                t_5.append("Lunch")
+
+        for i in (self.period_7):
+            try:
+                if (str(i.keys())).lower() != "lunch":
+                    for v in i.keys():
+                        t_7.append(v)
+                else:
+                    t_7.append("Lunch")
+            except AttributeError:
+                t_7.append("Lunch")
+
+        for i in (self.period_8):
+            try:
+                if (str(i.keys())).lower() != "lunch":
+                    for v in i.keys():
+                        t_8.append(v)
+                else:
+                    t_8.append("Lunch")
+            except AttributeError:
+                t_8.append("Lunch")
+
+        for i in (self.period_9):
+            try:
+                if (str(i.keys())).lower() != "lunch":
+                    for v in i.keys():
+                        t_9.append(v)
+                else:
+                    t_9.append("Lunch")
+            except AttributeError:
+                t_9.append("Lunch")
+
+        for i in (self.period_10):
+            try:
+                if (str(i.keys())).lower() != "lunch":
+                    for v in i.keys():
+                        t_10.append(v)
+                else:
+                    t_10.append("Lunch")
+            except AttributeError:
+                t_10.append("Lunch")
+
+        for i in (self.period_11):
+            try:
+                if (str(i.keys())).lower() != "lunch":
+                    for v in i.keys():
+                        t_11.append(v)
+                else:
+                    t_11.append("Lunch")
+            except AttributeError:
+                t_11.append("Lunch")
+
+        for i in (self.period_12):
+            try:
+                if (str(i.keys())).lower() != "lunch":
+                    for v in i.keys():
+                        t_12.append(v)
+                else:
+                    t_12.append("Lunch")
+            except AttributeError:
+                t_12.append("Lunch")
+        for i in (self.period_6):
+            try:
+                print(i)
+                if (str(i.keys())).lower() != "lunch":
+                    for v in i.keys():
+                        t_6.append(v)
+                else:
+                    t_6.append("Lunch")
+            except AttributeError:
+                t_6.append("Lunch")
         self.t_1 = t_1
         self.t_2 = t_2
         self.t_3 = t_3

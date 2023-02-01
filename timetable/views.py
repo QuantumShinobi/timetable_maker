@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.views import View
 from .models import Timetable, Teacher
 import json
+import datetime
 
 # Create Login page view
 
@@ -37,7 +38,17 @@ class InputView(View):
         try:
             timetable_uuid = request.COOKIES['Timetable_identity']
         except (KeyError, AttributeError):
-            return render(request, "main_form.html")
+            try:
+                error = request.COOKIES['Error']
+            except (KeyError, AttributeError):
+
+                resp = render(request, "main_form.html")
+                return resp
+            else:
+                resp = render(request, "main_form.html",
+                              context={"error": error})
+                resp.delete_cookie("Error")
+                return resp
         else:
             try:
                 timetable = Timetable.objects.get(uuid=timetable_uuid)
@@ -55,19 +66,30 @@ class InputView(View):
         lunch_period = request.POST['lunch_period']
         no_of_teachers = request.POST['no_of_teachers']
         start_time = request.POST['start_time']
-        end_time = request.POST['end_time']
+        # end_time = request.POST['end_time']
+        print(start_time)
+        hour = start_time[0:2]
+        minutes = start_time[3:-1]
+        # print(f"Start time:{type(start_time)}")
         # print(periods, len_per_period, lunch_period, no_of_teachers,
         #       start_time, end_time)
         # convert time to datetime format so that it can be put in the database object
         # to get the information of teachers depending on the number of teachers and then assigning that information to the timetable class so that the timetable can be made
         # the information should be a dictionary and the number of dictionaries will be equal to the number of teachers
-        timetable = Timetable.objects.create(periods=periods,
-                                             len_per_period=len_per_period,
-                                             lunch_period=lunch_period,
-                                             no_of_teachers=no_of_teachers,
-                                             start_time=start_time,
-                                             end_time=end_time)
+        timetable = Timetable.objects.create(
+            periods=periods,
+            len_per_period=len_per_period,
+            lunch_period=lunch_period,
+            no_of_teachers=no_of_teachers,
+            start_time=datetime.time(hour=int(hour), minute=int(minutes)),
+        )
+        print(start_time)
         timetable.save()
+        # print(timetable.start_time)
+        # end_time = datetime.time(
+        #     hour=int(hour), minute=int(minutes)) + datetime.timedelta(
+        #         minutes=int(40 * (timetable.len_per_period)))
+        # print(end_time)
         resp = redirect("timetable:teacher_form")
         resp.set_cookie("Timetable_identity", timetable.uuid, max_age=31556952)
         # teachers should be a dictionary of the form -> teacher:subject
@@ -96,7 +118,6 @@ class TeacherInput(View):
                                       for x in range(timetable.no_of_teachers)
                                   ]
                               })
-                pass
 
     def post(self, request):
         Teacher.objects.all().delete()
@@ -126,6 +147,11 @@ class TeacherInput(View):
         # print(timetable.teachers)
         comp = timetable.make_class_dict()
         compiled_timetable = timetable.sort()
+        if compiled_timetable == False:
+            resp = redirect("timetable:clear_cookie")
+            resp.set_cookie("Error", "Not enough teachers")
+
+            return resp
         # print(compiled_timetable)
         timetable.period_wise()
         return redirect("timetable:show_timetable")
@@ -145,12 +171,26 @@ class TimetableView(View):
                 return redirect("timetable:input")
             else:
                 a = timetable.output_format()
-
+                timings = timetable.get_timings()
+                periods = {
+                    timings[0]: timetable.t_1,
+                    timings[1]: timetable.t_2,
+                    timings[2]: timetable.t_3,
+                    timings[3]: timetable.t_4,
+                    timings[4]: timetable.t_5,
+                    timings[5]: timetable.t_6,
+                    timings[6]: timetable.t_7,
+                    timings[7]: timetable.t_8,
+                    timings[8]: timetable.t_9,
+                    timings[9]: timetable.t_10
+                }
                 # timeable dict is a dictionary with everyclass as the key and then it's timetable as the Value
                 return render(request,
                               "timetable.html",
                               context={
+                                  "timings": timings,
                                   "timetable_obj": timetable,
+                                  "periods": periods,
                                   'period_1': timetable.t_1,
                                   'period_2': timetable.t_2,
                                   'period_3': timetable.t_3,
@@ -164,6 +204,55 @@ class TimetableView(View):
                                   'period_11': timetable.t_11,
                                   'period_12': timetable.t_12,
                               })
+
+
+def show_teacher_wise(request):
+    try:
+        timetable_uuid = request.COOKIES['Timetable_identity']
+    except (KeyError, AttributeError):
+        return redirect("timetable:input")
+    else:
+        try:
+            timetable = Timetable.objects.get(uuid=timetable_uuid)
+        except Timetable.DoesNotExist:
+            return redirect("timetable:input")
+        else:
+            a = timetable.output_teacher_wise()
+            timings = timetable.get_timings()
+            periods = {
+                timings[0]: timetable.t_1,
+                timings[1]: timetable.t_2,
+                timings[2]: timetable.t_3,
+                timings[3]: timetable.t_4,
+                timings[4]: timetable.t_5,
+                timings[5]: timetable.t_6,
+                timings[6]: timetable.t_7,
+                timings[7]: timetable.t_8,
+                timings[8]: timetable.t_9,
+                timings[9]: timetable.t_10
+            }
+            print(periods)
+            # timeable dict is a dictionary with everycla   ss as the key and then it's timetable as the Value
+            return render(request,
+                          "timetable.html",
+                          context={
+                              "teacher_wise": True,
+                              "timings": timings,
+                              "timetable_obj": timetable,
+                              "periods": periods,
+                              'period_1': timetable.t_1,
+                              'period_2': timetable.t_2,
+                              'period_3': timetable.t_3,
+                              'period_4': timetable.t_4,
+                              'period_5': timetable.t_5,
+                              'period_6': timetable.t_6,
+                              'period_7': timetable.t_7,
+                              'period_8': timetable.t_8,
+                              'period_9': timetable.t_9,
+                              'period_10': timetable.t_10,
+                              'period_11': timetable.t_11,
+                              'period_12': timetable.t_12,
+                          })
 
 
 def clear_cookie(request):

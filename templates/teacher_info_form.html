@@ -12,95 +12,114 @@
 <br>
 <script>
 
+teacher_arr = [
+  "Mr. Chintu",
+  "Mr. Shiva",
+  "Mr. Ram",
+  "Mr. Shyam",
+  "Ms. Bharti",
+  "Ms. Bhatt",
+  "Mr. Arpan",
+  "Ms. Rani",
+  "Mr. Kulkarni",
+  "Ms. Rishi",
+  "Mr. Ayush",
+  "Ms. Swati",
+  "Mr. Dev",
+  "Ms. Priya",
+  "Mr. Varun",
+  "Ms. Maya",
+  "Mr. Surya",
+  "Ms. Keerti",
+  "Mr. Shreyas",
+  "Ms. Gunjan",
+  "Mr. Arjun",
+  "Ms. Gayathri",
+  "Ms. Rekha",
+  "Ms. Kaajal",
+  "Ms. Radha",
+  "Ms. Ananya",
+  "Mr. Swayam",
+];
+
 function autoFill() {
-  document.getElementById("teacher_1_name").value = "a";
+  document.getElementById("teacher_1_name").value = "Mr. Chintu";
   document.getElementById("teacher_1_subj").value = "English";
   document.getElementById("teacher_1_grades").value = "1,2,3,4,5";
 
-  document.getElementById("teacher_2_name").value = "b";
+  document.getElementById("teacher_2_name").value = "Mr. Shiva";
   document.getElementById("teacher_2_subj").value = "Maths";
   document.getElementById("teacher_2_grades").value = "1,2,3,4,5";
 
-  document.getElementById("teacher_3_name").value = "c";
+  document.getElementById("teacher_3_name").value = "Mr. Kulkarni";
   document.getElementById("teacher_3_subj").value = "Science";
   document.getElementById("teacher_3_grades").value = "1,2,3";
 
-  document.getElementById("teacher_4_name").value = "d";
+  document.getElementById("teacher_4_name").value = "Ms. Ananya";
   document.getElementById("teacher_4_subj").value = "Social";
   document.getElementById("teacher_4_grades").value = "1,2,3";
 
-  document.getElementById("teacher_5_name").value = "e";
+  document.getElementById("teacher_5_name").value = "Ms. Rekha";
   document.getElementById("teacher_5_subj").value = "Japanese";
   document.getElementById("teacher_5_grades").value = "1,2,3";
 
-  document.getElementById("teacher_6_name").value = "f";
+  document.getElementById("teacher_6_name").value = "Ms. Maya";
   document.getElementById("teacher_6_subj").value = "Science";
   document.getElementById("teacher_6_grades").value = "4,5";
 
-  document.getElementById("teacher_7_name").value = "g";
+  document.getElementById("teacher_7_name").value = "Ms. Rishi";
   document.getElementById("teacher_7_subj").value = "Social";
   document.getElementById("teacher_7_grades").value = "4,5";
 
-  document.getElementById("teacher_8_name").value = "h";
+  document.getElementById("teacher_8_name").value = "Mr. Ram";
   document.getElementById("teacher_8_subj").value = "Maths";
   document.getElementById("teacher_8_grades").value = "4,5";
 
-  document.getElementById("teacher_9_name").value = "i";
+  document.getElementById("teacher_9_name").value = "Mr. Shyam";
   document.getElementById("teacher_9_subj").value = "English";
   document.getElementById("teacher_9_grades").value = "6,7,8";
 
-  document.getElementById("teacher_10_name").value = "j";
+  document.getElementById("teacher_10_name").value = "Ms. Keerti";
   document.getElementById("teacher_10_subj").value = "Science";
   document.getElementById("teacher_10_grades").value = "6,7,8";
 
-  document.getElementById("teacher_11_name").value = "k";
+  document.getElementById("teacher_11_name").value = "Mr. Surya";
   document.getElementById("teacher_11_subj").value = "Social";
   document.getElementById("teacher_11_grades").value = "6,7,8,9";
 
-  document.getElementById("teacher_12_name").value = "l";
+  document.getElementById("teacher_12_name").value = "Mr. Salman";
   document.getElementById("teacher_12_subj").value = "Maths";
   document.getElementById("teacher_12_grades").value = "6,7,8,9";
 
-  document.getElementById("teacher_13_name").value = "m";
+  document.getElementById("teacher_13_name").value = "Mr. Ganshyam";
   document.getElementById("teacher_13_subj").value = "Social";
   document.getElementById("teacher_13_grades").value = "6,7,8,9";
 
-  document.getElementById("teacher_14_name").value = "n";
+  document.getElementById("teacher_14_name").value = "Ms. Reema";
   document.getElementById("teacher_14_subj").value = "English";
   document.getElementById("teacher_14_grades").value = "9,10,11,12";
 
-  document.getElementById("teacher_15_name").value = "o";
+  document.getElementById("teacher_15_name").value = "Ms. Radha";
   document.getElementById("teacher_15_subj").value = "Phsyics";
   document.getElementById("teacher_15_grades").value = "10,11,12";
 
-  document.getElementById("teacher_16_name").value = "p";
+  document.getElementById("teacher_16_name").value = "Mr. Dev";
   document.getElementById("teacher_16_subj").value = "Chemistry";
   document.getElementById("teacher_16_grades").value = "10,11,12";
 
-  document.getElementById("teacher_17_name").value = "q";
+  document.getElementById("teacher_17_name").value = "Mr. Arpan";
   document.getElementById("teacher_17_subj").value = "Computers/Bio";
   document.getElementById("teacher_17_grades").value = "10,11,12";
 
-  document.getElementById("teacher_18_name").value = "5";
+  document.getElementById("teacher_18_name").value = "Mr. Ayush";
   document.getElementById("teacher_18_subj").value = "English";
   document.getElementById("teacher_18_grades").value = "10,11,12";
 }
+
 </script>
-{% comment %} <br>
- <center>
-     <div class="card border-success mb-3" style="text-align:center;max-width: 50rem">
- 
-  <div class="card-header" style="text-align:center;font-family:sans-serif">Teacher information</div>
-  <div class="card-body">
- 
-  </div>
-</div> {% endcomment %}
-<button onclick="autoFill()" class="btn btn-primary">Autofill</button>
-   <style>
-     .bg{
-       backgroud-color: #bae6e5;
-     }
-   </style>
+
+<button onclick="autoFill()" class="btn-lg btn btn-outline-success">Autofill</button>
+   
 
 
 <form style="text-align:center;" action="{% url 'timetable:teacher_form' %}" method="POST">

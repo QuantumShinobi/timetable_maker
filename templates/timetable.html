@@ -63,8 +63,20 @@
       
     </tr>
   </thead>
+  
   <tbody>
+    {% for k,v in periods.items %}
     <tr>
+      <th scope="row">
+        {{k}}</th>
+      {% for i in v %}
+      <td>
+        {{i}}
+      </td>
+      {% endfor %}  
+    {% endfor %}
+    </tr>
+    {% comment %} <tr>
       <th scope="row">Period 1</th>
       {% for i in period_1 %}
       <td>
@@ -142,12 +154,19 @@
         {{i}}
       </td>
       {% endfor %}
-    </tr>
+    </tr> {% endcomment %}
       
   </tbody>
 </table>
-<button onclick="download_table_as_csv('timetable')" class="btn btn-primary">Download Table as Csv</button>
-<br><br><br>
+<button onclick="download_table_as_csv('timetable')" class="btn btn-primary">Download Table as CSV</button>
+<br>
+{% if teacher_wise %}
+<a class="btn btn-success" href="{% url 'timetable:show_timetable' %}">Show the timetable Subject-Wise</a>
+<br>
+{% else %}
+<a class="btn btn-success" href="{% url 'timetable:teacher_wise' %}">Show the timetable Teacher-Wise</a>
+<br>
+{% endif %}
 <a class="btn btn-danger" href="{% url 'timetable:clear_cookie' %}">Make another timetable</a>
 </div></div>
 
