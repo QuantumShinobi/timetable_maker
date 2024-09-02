@@ -9,5 +9,4 @@ urlpatterns = [
     path("teacher_form", TeacherInput.as_view(), name="teacher_form"),
     path("clear_cookie", clear_cookie, name="clear_cookie"),
     path("teacher_wise", show_teacher_wise, name="teacher_wise")
-
 ]

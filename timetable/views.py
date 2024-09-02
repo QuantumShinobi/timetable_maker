@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from django.views import View
 from .models import Timetable, Teacher
-import json
 import datetime
 
 # Create Login page view
@@ -11,26 +9,6 @@ import datetime
 class MainView(View):
     def get(self, request):
         return render(request, "index.html")
-
-
-def html(request):
-    return render(request, "timetable.html")
-
-
-def test(request):
-    try:
-        timetable_uuid = request.COOKIES['Timetable_identity']
-    except (KeyError, AttributeError):
-        return render(request, "main_form.html")
-    else:
-        try:
-            timetable = Timetable.objects.get(uuid=timetable_uuid)
-        except Timetable.DoesNotExist:
-            resp = render(request, "main_form.html")
-            resp.delete_cookie("Timetable_identity")
-            return resp
-        else:
-            pass
 
 
 class InputView(View):
@@ -45,7 +23,8 @@ class InputView(View):
                 resp = render(request, "main_form.html")
                 return resp
             else:
-                resp = render(request, "main_form.html",
+                resp = render(request,
+                              "main_form.html",
                               context={"error": error})
                 resp.delete_cookie("Error")
                 return resp
@@ -67,15 +46,8 @@ class InputView(View):
         no_of_teachers = request.POST['no_of_teachers']
         start_time = request.POST['start_time']
         # end_time = request.POST['end_time']
-        print(start_time)
         hour = start_time[0:2]
         minutes = start_time[3:-1]
-        # print(f"Start time:{type(start_time)}")
-        # print(periods, len_per_period, lunch_period, no_of_teachers,
-        #       start_time, end_time)
-        # convert time to datetime format so that it can be put in the database object
-        # to get the information of teachers depending on the number of teachers and then assigning that information to the timetable class so that the timetable can be made
-        # the information should be a dictionary and the number of dictionaries will be equal to the number of teachers
         timetable = Timetable.objects.create(
             periods=periods,
             len_per_period=len_per_period,
@@ -83,13 +55,7 @@ class InputView(View):
             no_of_teachers=no_of_teachers,
             start_time=datetime.time(hour=int(hour), minute=int(minutes)),
         )
-        print(start_time)
         timetable.save()
-        # print(timetable.start_time)
-        # end_time = datetime.time(
-        #     hour=int(hour), minute=int(minutes)) + datetime.timedelta(
-        #         minutes=int(40 * (timetable.len_per_period)))
-        # print(end_time)
         resp = redirect("timetable:teacher_form")
         resp.set_cookie("Timetable_identity", timetable.uuid, max_age=31556952)
         # teachers should be a dictionary of the form -> teacher:subject
@@ -231,7 +197,6 @@ def show_teacher_wise(request):
                 timings[8]: timetable.t_9,
                 timings[9]: timetable.t_10
             }
-            print(periods)
             # timeable dict is a dictionary with everycla   ss as the key and then it's timetable as the Value
             return render(request,
                           "timetable.html",
